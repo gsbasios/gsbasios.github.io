@@ -1,0 +1,41 @@
+.about {
+  max-width: 68ch;
+  padding-block: clamp(36px, 5vw, 64px) clamp(64px, 8vw, 112px);
+}
+
+.about h2 {
+  margin-top: var(--s8);
+  margin-bottom: var(--s3);
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.about h2:first-child { margin-top: 0; }
+
+.about p,
+.about li {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+.about p + p,
+.about ul + p,
+.about p + ul { margin-top: var(--s3); }
+
+.about ul {
+  padding-left: 1.25em;
+  list-style: disc;
+}
+.about li { padding-left: 4px; }
+.about li + li { margin-top: 4px; }
+.about li::marker { color: var(--ink-3); }
+
+.about a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--t-fast) ease;
+}
+.about a:hover { text-decoration-color: var(--accent); }

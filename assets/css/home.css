@@ -1,0 +1,115 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  display: grid;
+  align-items: center;
+  min-height: min(calc(100svh - var(--head-h)), 720px);
+  padding: clamp(56px, 8vw, 104px) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-field,
+.hero::before,
+.hero::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(circle, var(--dot) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+  background-position: center;
+}
+
+.hero-field {
+  --dot: color-mix(in srgb, var(--ink) 34%, transparent);
+  mask-image: radial-gradient(ellipse 62% 78% at 76% 46%, #000 0%, rgba(0, 0, 0, 0.5) 45%, transparent 80%);
+  animation: field-in 1800ms var(--ease-out) 240ms backwards;
+}
+
+.hero::before {
+  content: "";
+  --dot: color-mix(in srgb, var(--ink) 80%, transparent);
+  background-image: radial-gradient(circle, var(--dot) 1.15px, transparent 1.65px);
+  mask-image: radial-gradient(150px circle at var(--bx) var(--by), #000 0%, rgba(0, 0, 0, 0.55) 50%, transparent 100%);
+  animation: orb-drift 26s ease-in-out infinite, field-in 1800ms var(--ease-out) 600ms backwards;
+}
+
+.hero::after {
+  content: "";
+  --dot: var(--accent);
+  background-image: radial-gradient(circle, var(--dot) 1.25px, transparent 1.75px);
+  --x: inherit;
+  --y: inherit;
+  mask-image: radial-gradient(240px circle at var(--x) var(--y), #000, rgba(0, 0, 0, 0.4) 40%, transparent 75%);
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+
+.hero:hover::after { opacity: 1; }
+
+@property --bx {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 72%;
+}
+
+@property --by {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 46%;
+}
+
+@keyframes orb-drift {
+  0%   { --bx: 72%; --by: 46%; }
+  20%  { --bx: 88%; --by: 24%; }
+  40%  { --bx: 58%; --by: 20%; }
+  60%  { --bx: 46%; --by: 62%; }
+  80%  { --bx: 80%; --by: 82%; }
+  100% { --bx: 72%; --by: 46%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero::before { animation: none; }
+}
+
+@keyframes field-in {
+  from { opacity: 0; }
+}
+
+.hero-title { max-width: 26ch; }
+
+.hero-title .word {
+  display: inline-block;
+  animation: word-in 900ms var(--ease-out) backwards;
+  animation-delay: 80ms;
+  animation-delay: calc(sibling-index() * 55ms);
+}
+
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--rise) * 1.4));
+    filter: blur(var(--blur));
+  }
+}
+
+.hero-body { margin-top: clamp(28px, 4vw, 44px); }
+.hero-body .lede + .lede { margin-top: var(--s4); }
+
+.hero-body > * {
+  animation: rise 800ms var(--ease-out) backwards;
+  animation-delay: 520ms;
+  animation-delay: calc(400ms + sibling-index() * 90ms);
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s3);
+  margin-top: var(--s6);
+}
+
+@media (max-width: 940px) {
+  .hero-field { mask-image: radial-gradient(ellipse 90% 70% at 70% 40%, #000 0%, rgba(0, 0, 0, 0.3) 50%, transparent 82%); }
+}

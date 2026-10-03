@@ -1,0 +1,43 @@
+---
+layout: collection
+nav: tooling
+title: Tooling
+items: tools
+card: tool-card.html
+list: card-grid
+noun: tool
+nouns: tools
+lede: "Scripts I actually run on boxes: recon sweeps, enumeration parsers and the small post-exploitation helpers that were worth cleaning up."
+empty: "The recon and enumeration scripts I run on boxes are still rough enough that publishing them would waste your time. They land here once each one is documented and worth reaching for."
+description: "Recon, enumeration and post-exploitation tooling: what each one does, how to install it and when to reach for it."
+---
+
+{%- assign docs = site.tools -%}
+{%- assign categories = docs | map: "category" | compact | uniq | sort -%}
+{%- assign languages = docs | map: "language" | compact | uniq | sort -%}
+
+<div class="select">
+  <select data-filter="category" aria-label="Filter by category">
+    <option value="all">All categories</option>
+    {%- for category in categories %}
+    <option value="{{ category | slugify }}">{{ category }}</option>
+    {%- endfor %}
+  </select>
+</div>
+
+<div class="select">
+  <select data-filter="language" aria-label="Filter by language">
+    <option value="all">All languages</option>
+    {%- for language in languages %}
+    <option value="{{ language | slugify }}">{{ language }}</option>
+    {%- endfor %}
+  </select>
+</div>
+
+<div class="select">
+  <select data-sort aria-label="Sort tooling">
+    <option value="newest">Newest first</option>
+    <option value="oldest">Oldest first</option>
+    <option value="title">Alphabetical</option>
+  </select>
+</div>

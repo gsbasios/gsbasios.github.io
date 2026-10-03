@@ -1,0 +1,11 @@
+<dl class="vitals">
+  {%- if page.os %}
+  <div><dt>OS</dt><dd>{{ page.os }}</dd></div>
+  {%- endif %}
+  {%- if page.difficulty %}
+  <div><dt>Difficulty</dt><dd><span class="badge badge-{{ page.difficulty | slugify }}">{{ page.difficulty }}</span></dd></div>
+  {%- endif %}
+  {%- if page.platform %}
+  <div><dt>Platform</dt><dd>{{ page.platform }}</dd></div>
+  {%- endif %}
+</dl>

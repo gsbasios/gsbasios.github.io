@@ -1,0 +1,39 @@
+{%- assign doc = include.doc -%}
+{%- assign kind = doc.kind | default: "Analysis" -%}
+
+<a class="card res-card" href="{{ doc.url | relative_url }}" data-item data-spotlight
+   data-title="{{ doc.title | downcase | escape }}"
+   data-date="{{ doc.date | date: '%Y%m%d' }}"
+   data-kind="{{ kind | slugify }}"
+   data-severity="{{ doc.severity | slugify }}">
+
+  <span class="res-strip">
+    <span class="res-kind">{{ kind }}</span>
+    {%- if doc.date %}
+    <span class="sep" aria-hidden="true">·</span>
+    <span class="tabular">{{ doc.date | date: "%d %b %Y" }}</span>
+    {%- endif %}
+  </span>
+
+  <span class="res-body">
+    <span class="card-title">{{ doc.title }}</span>
+    {%- if doc.summary %}
+    <span class="card-desc" data-desc>{{ doc.summary }}</span>
+    {%- endif %}
+    {%- if doc.cve or doc.target or doc.status %}
+    <span class="res-tags">
+      {%- if doc.cve %}<span class="tag mono">{{ doc.cve }}</span>{% endif -%}
+      {%- if doc.target %}<span class="tag">{{ doc.target }}</span>{% endif -%}
+      {%- if doc.status %}<span class="tag">{{ doc.status }}</span>{% endif -%}
+    </span>
+    {%- endif %}
+  </span>
+
+  {%- if doc.severity %}
+  <span class="res-aside">
+    <span class="badge badge-{{ doc.severity | slugify }}">{{ doc.severity }}</span>
+    <span class="res-sev">Severity</span>
+  </span>
+  {%- endif %}
+
+</a>

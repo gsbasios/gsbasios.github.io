@@ -1,0 +1,52 @@
+---
+layout: base
+nav: home
+styles: [home]
+headline: "The quieter you become, the more you can hear"
+---
+
+{%- assign latest = site.writeups | sort: "date" | reverse -%}
+{%- assign words = page.headline | split: " " -%}
+
+<section class="hero" data-spotlight>
+  <div class="hero-field" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <h1 class="display hero-title">
+      {%- for word in words %}<span class="word">{{ word }}</span> {% endfor -%}
+    </h1>
+
+    <div class="hero-body">
+      <p class="lede">
+        I'm a Computer Science and Engineering student working my way into offensive
+        security. Here I publish my machine writeups, the tooling I build and the
+        vulnerability research I do on my own.
+      </p>
+      <p class="lede">Everything here was done against machines I was authorised to test.</p>
+
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="{{ '/writeups.html' | relative_url }}">Read the writeups {% include icon.html name="arrow-right" %}</a>
+        <a class="btn" href="{{ '/about.html' | relative_url }}">About me</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{%- if latest.size > 0 %}
+<section class="section" data-reveal>
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Latest writeups</h2>
+      <a class="section-link" href="{{ '/writeups.html' | relative_url }}">All writeups {% include icon.html name="arrow-right" %}</a>
+    </div>
+
+    <div class="entry-list">
+      {%- for doc in latest limit: 4 %}
+      {% include entry.html doc=doc %}
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}

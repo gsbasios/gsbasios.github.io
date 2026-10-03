@@ -1,0 +1,82 @@
+title:       Georgios Basios
+tagline:     Offensive Security
+description: "Hack The Box writeups and offensive security notes by Georgios Basios."
+url:         "https://gsbasios.github.io"
+author:      Georgios Basios
+email:       gsbasios@protonmail.com
+
+social:
+  github:   gsbasios
+  linkedin: gsbasios
+
+difficulties: [Easy, Medium, Hard, Insane]
+severities:   [Critical, High, Medium, Low]
+
+markdown:    kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
+plugins:
+  - jekyll-sitemap
+
+collections:
+  writeups:
+    output: true
+    permalink: /writeups/:name.html
+  tools:
+    output: true
+    permalink: /tools/:name.html
+  research:
+    output: true
+    permalink: /research/:name.html
+
+defaults:
+  - scope:
+      path: ""
+      type: writeups
+    values:
+      layout: article
+      nav: writeups
+  - scope:
+      path: ""
+      type: tools
+    values:
+      layout: article
+      nav: tooling
+  - scope:
+      path: ""
+      type: research
+    values:
+      layout: article
+      nav: research
+
+nav:
+  - key: home
+    name: Home
+    url: /index.html
+  - key: writeups
+    name: Writeups
+    url: /writeups.html
+  - key: tooling
+    name: Tooling
+    url: /tooling.html
+  - key: research
+    name: Research
+    url: /research.html
+  - key: about
+    name: About
+    url: /about.html
+
+exclude:
+  - vendor
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - .bundle
+  - serve.sh
+  - scripts

@@ -1,0 +1,7 @@
+<div class="install">
+  <code class="install-cmd">{{ include.cmd }}</code>
+  <button type="button" class="copy-btn" data-copy="{{ include.cmd | escape }}" aria-label="Copy install command">
+    {% include icon.html name="copy" %}
+    {% include icon.html name="check" %}
+  </button>
+</div>

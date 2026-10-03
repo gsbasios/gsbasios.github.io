@@ -1,0 +1,60 @@
+---
+layout: base
+styles: [index]
+scripts: [filter]
+---
+
+{%- assign docs = site[page.items] | sort: "date" | reverse -%}
+{%- assign total = docs | size -%}
+
+{%- if total == 0 %}
+
+{% include stub.html eyebrow=page.title title="Nothing here yet." lede=page.empty %}
+
+{%- else %}
+
+{% include page-head.html %}
+
+<div class="filter-shell">
+
+  <div class="filter-search">
+    <div class="wrap">
+      <label class="search">
+        {% include icon.html name="search" %}
+        <input type="search" data-search autocomplete="off" spellcheck="false"
+               placeholder="Search {{ page.title | downcase }}" aria-label="Search {{ page.title | downcase }}">
+      </label>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="wrap filter-row">
+      {{ content }}
+      <button type="button" class="reset" data-reset>Clear</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="wrap">
+
+  <p class="result-bar">
+    <span><span class="count" data-count>{{ total }}</span> of {{ total }} {% if total == 1 %}{{ page.noun }}{% else %}{{ page.nouns }}{% endif %}</span>
+    <span data-sort-label>Newest first</span>
+  </p>
+
+  <div class="{{ page.list }}" data-list>
+    {%- for doc in docs %}
+    {% include {{ page.card }} doc=doc %}
+    {%- endfor %}
+  </div>
+
+  <div class="empty" data-empty hidden>
+    <p class="empty-title">No matches</p>
+    <p>Nothing matches those filters.</p>
+    <button type="button" class="btn" data-reset>Clear filters</button>
+  </div>
+
+</div>
+
+{%- endif %}

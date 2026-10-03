@@ -1,0 +1,45 @@
+---
+layout: collection
+nav: research
+title: Research
+items: research
+card: research-card.html
+list: res-list
+noun: entry
+nouns: entries
+lede: "Bugs I found and took apart myself: advisories, root-cause analysis and infrastructure experiments. Each one says what was tested, what broke and what was disclosed."
+empty: "Advisories, root-cause analyses and infrastructure experiments get published here once disclosure is finished. Nothing has cleared that bar yet."
+description: "Independent security research: advisories, root-cause analysis and infrastructure experiments, with the disclosure status of each."
+---
+
+{%- assign docs = site.research -%}
+{%- assign kinds = docs | map: "kind" | compact | uniq | sort -%}
+
+<div class="select">
+  <select data-filter="kind" aria-label="Filter by kind">
+    <option value="all">All kinds</option>
+    {%- for kind in kinds %}
+    <option value="{{ kind | slugify }}">{{ kind }}</option>
+    {%- endfor %}
+  </select>
+</div>
+
+<div class="select">
+  <select data-filter="severity" aria-label="Filter by severity">
+    <option value="all">All severities</option>
+    {%- for level in site.severities %}
+    {%- assign hits = docs | where: "severity", level | size %}
+    {%- if hits > 0 %}
+    <option value="{{ level | slugify }}">{{ level }}</option>
+    {%- endif %}
+    {%- endfor %}
+  </select>
+</div>
+
+<div class="select">
+  <select data-sort aria-label="Sort research">
+    <option value="newest">Newest first</option>
+    <option value="oldest">Oldest first</option>
+    <option value="title">Alphabetical</option>
+  </select>
+</div>

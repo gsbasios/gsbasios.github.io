@@ -1,0 +1,33 @@
+{%- assign doc = include.doc -%}
+{%- assign rank = 0 -%}
+{%- for level in site.difficulties -%}
+  {%- if level == doc.difficulty -%}{%- assign rank = forloop.index -%}{%- endif -%}
+{%- endfor -%}
+
+<a class="entry" href="{{ doc.url | relative_url }}" data-item data-spotlight
+   data-title="{{ doc.title | downcase | escape }}"
+   data-date="{{ doc.date | date: '%Y%m%d' }}"
+   data-os="{{ doc.os | slugify }}"
+   data-difficulty="{{ doc.difficulty | slugify }}"
+   data-rank="{{ rank }}">
+
+  <span class="entry-body">
+    <span class="entry-title">{{ doc.title }}</span>
+    {%- if doc.summary %}
+    <span class="entry-desc" data-desc>{{ doc.summary }}</span>
+    {%- endif %}
+  </span>
+
+  <span class="entry-aside">
+    {%- if doc.difficulty %}
+    <span class="badge badge-{{ doc.difficulty | slugify }}">{{ doc.difficulty }}</span>
+    {%- endif %}
+    {%- if doc.os %}
+    <span class="entry-meta">{{ doc.os }}</span>
+    {%- endif %}
+    {%- if doc.date %}
+    <span class="entry-meta tabular">{{ doc.date | date: "%d %b %Y" }}</span>
+    {%- endif %}
+  </span>
+
+</a>

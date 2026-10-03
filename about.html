@@ -1,0 +1,54 @@
+---
+layout: page
+nav: about
+styles: [about]
+title: About
+lede: "Who I am, what's on this site and how the writeups are put together."
+description: "About Georgios Basios: Computer Science and Engineering student working in offensive security."
+---
+
+<div class="wrap">
+  <div class="about" data-reveal>
+    <h2>Who I am</h2>
+    <p>
+      I'm studying Computer Science and Engineering and I want to end up in
+      red teaming. Hack The Box is where most of the practice happens, so
+      that's what most of these writeups cover.
+    </p>
+
+    <h2>What's here</h2>
+    <ul>
+      <li><a href="{{ '/writeups.html' | relative_url }}">Writeups</a> of Hack The Box machines</li>
+      <li><a href="{{ '/tooling.html' | relative_url }}">Tooling</a> I write for recon and enumeration</li>
+      <li><a href="{{ '/research.html' | relative_url }}">Research</a> done on my own infrastructure</li>
+    </ul>
+    <p>The writeups fill up fastest. The other two grow more slowly.</p>
+
+    <h2>How I write</h2>
+    <p>I write them the way I'd want to find them:</p>
+    <ul>
+      <li>The enumeration output that actually mattered</li>
+      <li>The reasoning for each step, not just the payload</li>
+      <li>The attempts that failed before one worked</li>
+      <li>An explanation of the underlying bug when I use a public exploit</li>
+    </ul>
+    <p>
+      Nothing here is a copy of someone else's path through a box. Where I got
+      stuck and read around, I say so.
+    </p>
+
+    <h2>Scope</h2>
+    <p>
+      Everything published here was done against machines I was authorised to
+      test: retired Hack The Box boxes, lab environments and systems I own.
+    </p>
+
+    <h2>Contact</h2>
+    <p>If something here is wrong or unclear, tell me:</p>
+    <ul>
+      <li><a href="https://github.com/{{ site.social.github }}" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/{{ site.social.linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+    </ul>
+  </div>
+</div>

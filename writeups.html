@@ -1,0 +1,47 @@
+---
+layout: collection
+nav: writeups
+title: Writeups
+items: writeups
+card: entry.html
+list: entry-list
+noun: writeup
+nouns: writeups
+lede: "Every machine I've finished, newest first. Each one covers recon, foothold and privilege escalation, with the commands and output that mattered."
+empty: "Writeups go up here once the machine they cover retires. Hack The Box doesn't allow public writeups for active machines, so finished ones wait until then."
+description: "Hack The Box writeups covering recon, foothold and privilege escalation, with the commands and output that mattered."
+---
+
+{%- assign docs = site.writeups -%}
+{%- assign systems = docs | map: "os" | compact | uniq | sort -%}
+
+<div class="select">
+  <select data-filter="os" aria-label="Filter by operating system">
+    <option value="all">All operating systems</option>
+    {%- for os in systems %}
+    <option value="{{ os | slugify }}">{{ os }}</option>
+    {%- endfor %}
+  </select>
+</div>
+
+<div class="select">
+  <select data-filter="difficulty" aria-label="Filter by difficulty">
+    <option value="all">All difficulties</option>
+    {%- for level in site.difficulties %}
+    {%- assign hits = docs | where: "difficulty", level | size %}
+    {%- if hits > 0 %}
+    <option value="{{ level | slugify }}">{{ level }}</option>
+    {%- endif %}
+    {%- endfor %}
+  </select>
+</div>
+
+<div class="select">
+  <select data-sort aria-label="Sort writeups">
+    <option value="newest">Newest first</option>
+    <option value="oldest">Oldest first</option>
+    <option value="title">Alphabetical</option>
+    <option value="rank">Easiest first</option>
+    <option value="rank-desc">Hardest first</option>
+  </select>
+</div>

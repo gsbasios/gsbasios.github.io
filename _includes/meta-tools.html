@@ -1,0 +1,11 @@
+<dl class="matrix">
+  {%- if page.language %}
+  <div class="matrix-cell"><dt>Language</dt><dd>{{ page.language }}</dd></div>
+  {%- endif %}
+  {%- if page.category %}
+  <div class="matrix-cell"><dt>Category</dt><dd>{{ page.category }}</dd></div>
+  {%- endif %}
+  {%- if page.install %}
+  <div class="matrix-cell matrix-wide"><dt>Install</dt><dd>{% include install.html cmd=page.install %}</dd></div>
+  {%- endif %}
+</dl>

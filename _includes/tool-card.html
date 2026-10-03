@@ -1,0 +1,32 @@
+{%- assign doc = include.doc -%}
+
+<article class="card tool-card" data-item data-spotlight
+         data-title="{{ doc.title | downcase | escape }}"
+         data-date="{{ doc.date | date: '%Y%m%d' }}"
+         data-category="{{ doc.category | slugify }}"
+         data-language="{{ doc.language | slugify }}">
+
+  <div class="card-top">
+    <h2 class="card-title">
+      <a class="card-link" href="{{ doc.url | relative_url }}">{{ doc.title }}</a>
+    </h2>
+    {%- if doc.language %}
+    <span class="chip">{{ doc.language }}</span>
+    {%- endif %}
+  </div>
+
+  {%- if doc.summary %}
+  <p class="card-desc" data-desc>{{ doc.summary }}</p>
+  {%- endif %}
+
+  {%- if doc.install %}
+  {% include install.html cmd=doc.install %}
+  {%- endif %}
+
+  <footer class="card-foot">
+    {%- if doc.category %}
+    <span>{{ doc.category }}</span>
+    {%- endif %}
+  </footer>
+
+</article>

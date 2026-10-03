@@ -1,0 +1,51 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{%- if page.title -%}
+  {%- assign doc_title = page.title | append: " :: " | append: site.title -%}
+{%- else -%}
+  {%- assign doc_title = site.title | append: " :: " | append: "Portfolio" -%}
+{%- endif -%}
+{%- assign doc_desc = page.description | default: page.summary | default: site.description | strip | escape -%}
+
+<title>{{ doc_title }}</title>
+<meta name="description" content="{{ doc_desc }}">
+{%- if page.noindex %}
+<meta name="robots" content="noindex">
+{%- endif %}
+
+<meta name="theme-color" content="#0b0c0e" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+
+<meta property="og:type" content="{% if page.collection %}article{% else %}website{% endif %}">
+<meta property="og:title" content="{{ doc_title }}">
+<meta property="og:description" content="{{ doc_desc }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:site_name" content="{{ site.title }}">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+
+<link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon.svg' | relative_url }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/favicon-32.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/apple-touch-icon.png' | relative_url }}">
+
+<script>
+  (function () {
+    var theme;
+    try { theme = localStorage.getItem('gsb-theme'); } catch (e) {}
+    if (theme !== 'light' && theme !== 'dark') {
+      theme = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    document.documentElement.dataset.theme = theme;
+  })();
+</script>
+
+<link rel="preload" href="{{ '/assets/fonts/ibm-plex-sans-latin.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ '/assets/fonts/ibm-plex-mono-400-latin.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{{ '/assets/css/fonts.css' | relative_url }}">
+
+<link rel="stylesheet" href="{{ '/assets/css/core.css' | relative_url }}">
+{%- assign sheets = layout.styles | default: page.styles -%}
+{%- for sheet in sheets %}
+<link rel="stylesheet" href="{{ sheet | prepend: '/assets/css/' | append: '.css' | relative_url }}">
+{%- endfor %}

@@ -1,0 +1,48 @@
+<header class="site-head">
+  <div class="wrap head-row">
+
+    <a class="brand" href="{{ '/index.html' | relative_url }}">{{ site.title }}</a>
+
+    <nav class="nav" aria-label="Primary">
+      {%- for item in site.nav %}
+      <a class="nav-link" href="{{ item.url | relative_url }}"{% if page.nav == item.key %} aria-current="page"{% endif %}>
+        {%- if page.nav == item.key %}<span class="nav-pill" aria-hidden="true"></span>{% endif -%}
+        {{ item.name }}
+      </a>
+      {%- endfor %}
+    </nav>
+
+    <div class="head-actions">
+      {%- if page.layout == "article" %}
+      <button type="button" class="icon-btn toc-btn" id="tocToggle"
+              aria-expanded="false" aria-controls="mobileToc" aria-label="Contents" title="Contents">
+        {% include icon.html name="list" %}
+      </button>
+      {%- endif %}
+
+      <button type="button" class="icon-btn theme-btn" id="themeToggle" aria-label="Switch colour scheme">
+        {% include icon.html name="moon" %}
+        {% include icon.html name="sun" %}
+      </button>
+
+      <button type="button" class="icon-btn menu-btn" id="menuToggle"
+              aria-expanded="false" aria-controls="mobileNav" aria-label="Menu">
+        {% include icon.html name="menu" %}
+      </button>
+    </div>
+
+  </div>
+
+  <nav class="panel mobile-nav" id="mobileNav" aria-label="Primary">
+    {%- for item in site.nav %}
+    <a href="{{ item.url | relative_url }}"{% if page.nav == item.key %} aria-current="page"{% endif %}>{{ item.name }}</a>
+    {%- endfor %}
+  </nav>
+
+  {%- if page.layout == "article" %}
+  <div class="panel mobile-toc" id="mobileToc">
+    <span class="eyebrow">Contents</span>
+    <nav class="toc" aria-label="Contents"></nav>
+  </div>
+  {%- endif %}
+</header>
