@@ -1,33 +1,76 @@
 {%- assign doc = include.doc -%}
+{%- assign level = false -%}
+{%- assign scale = false -%}
+{%- assign ids = false -%}
+{%- assign facts = "" | split: "" -%}
 {%- assign rank = 0 -%}
-{%- for level in site.difficulties -%}
-  {%- if level == doc.difficulty -%}{%- assign rank = forloop.index -%}{%- endif -%}
-{%- endfor -%}
-
-<a class="entry" href="{{ doc.url | relative_url }}" data-item data-spotlight
+{%- case doc.collection -%}
+  {%- when "writeups" -%}
+    {%- assign label = "Writeup" -%}
+    {%- assign detail = doc.os -%}
+    {%- assign level = doc.difficulty -%}
+    {%- assign scale = site.difficulties -%}
+    {%- if doc.platform %}{% assign facts = facts | push: doc.platform %}{% endif -%}
+  {%- when "tools" -%}
+    {%- assign label = "Tool" -%}
+    {%- assign detail = doc.category -%}
+    {%- if doc.language %}{% assign facts = facts | push: doc.language %}{% endif -%}
+  {%- else -%}
+    {%- assign label = "Research" -%}
+    {%- assign detail = doc.kind | default: "Analysis" -%}
+    {%- assign level = doc.severity -%}
+    {%- assign scale = site.severities | reverse -%}
+    {%- if doc.cve %}{% assign ids = doc.cve | split: ", " %}{% endif -%}
+    {%- if doc.target %}{% assign facts = facts | push: doc.target %}{% endif -%}
+    {%- if doc.status %}{% assign facts = facts | push: doc.status %}{% endif -%}
+{%- endcase -%}
+{%- if level -%}
+  {%- for step in scale -%}{%- if step == level -%}{%- assign rank = forloop.index -%}{%- endif -%}{%- endfor -%}
+{%- endif %}
+<a class="entry" href="{{ doc.url | relative_url }}" data-item
    data-title="{{ doc.title | downcase | escape }}"
    data-date="{{ doc.date | date: '%Y%m%d' }}"
+   {%- case doc.collection %}
+   {%- when "writeups" %}
    data-os="{{ doc.os | slugify }}"
    data-difficulty="{{ doc.difficulty | slugify }}"
-   data-rank="{{ rank }}">
+   data-rank="{{ rank }}"
+   {%- when "tools" %}
+   data-category="{{ doc.category | slugify }}"
+   data-language="{{ doc.language | slugify }}"
+   {%- else %}
+   data-kind="{{ detail | slugify }}"
+   data-severity="{{ doc.severity | slugify }}"
+   {%- endcase %}>
 
-  <span class="entry-body">
-    <span class="entry-title">{{ doc.title }}</span>
-    {%- if doc.summary %}
-    <span class="entry-desc" data-desc>{{ doc.summary }}</span>
-    {%- endif %}
-  </span>
-
-  <span class="entry-aside">
-    {%- if doc.difficulty %}
-    <span class="badge badge-{{ doc.difficulty | slugify }}">{{ doc.difficulty }}</span>
-    {%- endif %}
-    {%- if doc.os %}
-    <span class="entry-meta">{{ doc.os }}</span>
-    {%- endif %}
+  <span class="entry-head">
+    <span class="entry-kind">
+      {%- if include.mixed %}{{ label }}{% if detail %}<span class="dot" aria-hidden="true">·</span>{% endif %}{% endif -%}
+      {{- detail -}}
+    </span>
     {%- if doc.date %}
-    <span class="entry-meta tabular">{{ doc.date | date: "%d %b %Y" }}</span>
+    <time class="entry-date" datetime="{{ doc.date | date: '%Y-%m-%d' }}">{{ doc.date | date: "%d %b %Y" }}</time>
     {%- endif %}
   </span>
+
+  <span class="entry-title">{{ doc.title }}</span>
+
+  {%- if doc.summary %}
+  <span class="entry-desc" data-desc>{{ doc.summary }}</span>
+  {%- endif %}
+
+  <span class="entry-meta">
+    {%- if level %}
+    <span class="level"><span class="meter" aria-hidden="true">{% for step in scale %}<i{% if forloop.index <= rank %} class="on"{% endif %}></i>{% endfor %}</span>{{ level }}</span>
+    {%- endif %}
+    {%- if ids %}{% for id in ids %}
+    <span class="tag">{{ id }}</span>
+    {%- endfor %}{% endif %}
+    {%- for fact in facts %}
+    <span class="tag">{{ fact }}</span>
+    {%- endfor %}
+  </span>
+
+  <span class="entry-go" aria-hidden="true">{% include icon.html name="arrow-up-right" %}</span>
 
 </a>

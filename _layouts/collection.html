@@ -15,46 +15,44 @@ scripts: [filter]
 
 {% include page-head.html %}
 
-<div class="filter-shell">
+<section class="listing" data-orb aria-label="{{ page.title }}">
 
-  <div class="filter-search">
+  <div class="filter-shell">
     <div class="wrap">
-      <label class="search">
-        {% include icon.html name="search" %}
-        <input type="search" data-search autocomplete="off" spellcheck="false"
-               placeholder="Search {{ page.title | downcase }}" aria-label="Search {{ page.title | downcase }}">
-      </label>
+      <div class="glass filter-bar">
+        <label class="search">
+          {% include icon.html name="search" %}
+          <input type="search" data-search autocomplete="off" spellcheck="false"
+                 placeholder="Search {{ page.title | downcase }}" aria-label="Search {{ page.title | downcase }}">
+          <kbd class="search-key" aria-hidden="true">/</kbd>
+        </label>
+        {{ content }}
+        <button type="button" class="reset" data-reset>Clear</button>
+      </div>
     </div>
   </div>
 
-  <div class="filters">
-    <div class="wrap filter-row">
-      {{ content }}
-      <button type="button" class="reset" data-reset>Clear</button>
+  <div class="wrap">
+
+    <p class="result-bar">
+      <span><span class="count" data-count>{{ total }}</span> of {{ total }} {% if total == 1 %}{{ page.noun }}{% else %}{{ page.nouns }}{% endif %}</span>
+      <span data-sort-label>Newest first</span>
+    </p>
+
+    <div class="{{ page.list }}" data-list>
+      {%- for doc in docs %}
+      {% include {{ page.card }} doc=doc %}
+      {%- endfor %}
     </div>
+
+    <div class="glass empty" data-empty hidden>
+      <p class="empty-title">No matches</p>
+      <p>Nothing matches those filters.</p>
+      <button type="button" class="pill" data-reset>Clear filters</button>
+    </div>
+
   </div>
 
-</div>
-
-<div class="wrap">
-
-  <p class="result-bar">
-    <span><span class="count" data-count>{{ total }}</span> of {{ total }} {% if total == 1 %}{{ page.noun }}{% else %}{{ page.nouns }}{% endif %}</span>
-    <span data-sort-label>Newest first</span>
-  </p>
-
-  <div class="{{ page.list }}" data-list>
-    {%- for doc in docs %}
-    {% include {{ page.card }} doc=doc %}
-    {%- endfor %}
-  </div>
-
-  <div class="empty" data-empty hidden>
-    <p class="empty-title">No matches</p>
-    <p>Nothing matches those filters.</p>
-    <button type="button" class="btn" data-reset>Clear filters</button>
-  </div>
-
-</div>
+</section>
 
 {%- endif %}

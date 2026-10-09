@@ -1,11 +1,15 @@
-<dl class="vitals">
-  {%- if page.os %}
-  <div><dt>OS</dt><dd>{{ page.os }}</dd></div>
-  {%- endif %}
-  {%- if page.difficulty %}
-  <div><dt>Difficulty</dt><dd><span class="badge badge-{{ page.difficulty | slugify }}">{{ page.difficulty }}</span></dd></div>
-  {%- endif %}
-  {%- if page.platform %}
-  <div><dt>Platform</dt><dd>{{ page.platform }}</dd></div>
-  {%- endif %}
-</dl>
+{%- assign rank = 0 -%}
+{%- for step in site.difficulties -%}{%- if step == page.difficulty -%}{%- assign rank = forloop.index -%}{%- endif -%}{%- endfor -%}
+<div class="glass doc-meta enter" style="--i: 4">
+  <dl class="vitals">
+    {%- if page.difficulty %}
+    <div><dt>Difficulty</dt><dd><span class="level"><span class="meter" aria-hidden="true">{% for step in site.difficulties %}<i{% if forloop.index <= rank %} class="on"{% endif %}></i>{% endfor %}</span>{{ page.difficulty }}</span></dd></div>
+    {%- endif %}
+    {%- if page.os %}
+    <div><dt>OS</dt><dd>{{ page.os }}</dd></div>
+    {%- endif %}
+    {%- if page.platform %}
+    <div><dt>Platform</dt><dd>{{ page.platform }}</dd></div>
+    {%- endif %}
+  </dl>
+</div>

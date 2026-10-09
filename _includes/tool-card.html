@@ -1,32 +1,31 @@
 {%- assign doc = include.doc -%}
 
-<article class="card tool-card" data-item data-spotlight
+<article class="glass tool-card" data-item
          data-title="{{ doc.title | downcase | escape }}"
          data-date="{{ doc.date | date: '%Y%m%d' }}"
          data-category="{{ doc.category | slugify }}"
          data-language="{{ doc.language | slugify }}">
 
-  <div class="card-top">
-    <h2 class="card-title">
-      <a class="card-link" href="{{ doc.url | relative_url }}">{{ doc.title }}</a>
-    </h2>
+  <div class="tool-top">
+    <span class="kicker">{{ doc.category | default: "Tool" }}</span>
     {%- if doc.language %}
-    <span class="chip">{{ doc.language }}</span>
+    <span class="tag">{{ doc.language }}</span>
     {%- endif %}
   </div>
 
+  <h2 class="tool-title">
+    <a class="tool-link" href="{{ doc.url | relative_url }}">{{ doc.title }}</a>
+  </h2>
+
   {%- if doc.summary %}
-  <p class="card-desc" data-desc>{{ doc.summary }}</p>
+  <p class="tool-desc" data-desc>{{ doc.summary }}</p>
   {%- endif %}
 
-  {%- if doc.install %}
-  {% include install.html cmd=doc.install %}
-  {%- endif %}
-
-  <footer class="card-foot">
-    {%- if doc.category %}
-    <span>{{ doc.category }}</span>
+  <div class="tool-foot">
+    {%- if doc.install %}
+    {% include install.html cmd=doc.install %}
     {%- endif %}
-  </footer>
+    <span class="tool-go" aria-hidden="true">{% include icon.html name="arrow-up-right" %}</span>
+  </div>
 
 </article>

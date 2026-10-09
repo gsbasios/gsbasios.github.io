@@ -1,31 +1,38 @@
-<dl class="vitals">
-  {%- if page.severity %}
-  <div><dt>Severity</dt><dd><span class="badge badge-{{ page.severity | slugify }}">{{ page.severity }}</span></dd></div>
-  {%- endif %}
-  {%- if page.cve %}
-  <div><dt>Identifier</dt><dd class="mono">{{ page.cve }}</dd></div>
-  {%- endif %}
-  {%- if page.target %}
-  <div><dt>Target</dt><dd>{{ page.target }}</dd></div>
-  {%- endif %}
-  {%- if page.status %}
-  <div><dt>Disclosure</dt><dd>{{ page.status }}</dd></div>
-  {%- endif %}
-  {%- if page.kind %}
-  <div><dt>Kind</dt><dd>{{ page.kind }}</dd></div>
-  {%- endif %}
-</dl>
+{%- assign scale = site.severities | reverse -%}
+{%- assign rank = 0 -%}
+{%- for step in scale -%}{%- if step == page.severity -%}{%- assign rank = forloop.index -%}{%- endif -%}{%- endfor -%}
+<div class="glass doc-meta enter" style="--i: 4">
 
-{%- if page.timeline %}
-<div class="timeline">
-  <span class="eyebrow">Disclosure timeline</span>
-  <ol>
-    {%- for step in page.timeline %}
-    <li>
-      <span class="tl-date tabular">{{ step.date | date: "%d %b %Y" }}</span>
-      <span>{{ step.event }}</span>
-    </li>
-    {%- endfor %}
-  </ol>
+  <dl class="vitals">
+    {%- if page.severity %}
+    <div><dt>Severity</dt><dd><span class="level"><span class="meter" aria-hidden="true">{% for step in scale %}<i{% if forloop.index <= rank %} class="on"{% endif %}></i>{% endfor %}</span>{{ page.severity }}</span></dd></div>
+    {%- endif %}
+    {%- if page.cve %}
+    <div class="vital-wide"><dt>Identifier</dt><dd class="mono">{% assign ids = page.cve | split: ", " %}{% for id in ids %}<span>{{ id }}</span>{% endfor %}</dd></div>
+    {%- endif %}
+    {%- if page.target %}
+    <div><dt>Target</dt><dd>{{ page.target }}</dd></div>
+    {%- endif %}
+    {%- if page.status %}
+    <div><dt>Disclosure</dt><dd>{{ page.status }}</dd></div>
+    {%- endif %}
+    {%- if page.kind %}
+    <div><dt>Kind</dt><dd>{{ page.kind }}</dd></div>
+    {%- endif %}
+  </dl>
+
+  {%- if page.timeline %}
+  <div class="timeline">
+    <span class="kicker">Disclosure timeline</span>
+    <ol>
+      {%- for step in page.timeline %}
+      <li>
+        <time class="tl-date" datetime="{{ step.date | date: '%Y-%m-%d' }}">{{ step.date | date: "%d %b %Y" }}</time>
+        <span class="tl-event">{{ step.event }}</span>
+      </li>
+      {%- endfor %}
+    </ol>
+  </div>
+  {%- endif %}
+
 </div>
-{%- endif %}

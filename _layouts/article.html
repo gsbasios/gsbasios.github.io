@@ -16,34 +16,43 @@ scripts: [article]
 {%- endif -%}
 {%- assign next_index = here | plus: 1 -%}
 {%- assign next = docs[next_index] -%}
+{%- case page.collection -%}
+  {%- when "writeups" -%}{%- assign kind = page.platform | default: "Writeup" -%}
+  {%- when "tools" -%}{%- assign kind = page.category | default: "Tool" -%}
+  {%- else -%}{%- assign kind = page.kind | default: "Research" -%}
+{%- endcase -%}
 
 <article class="article" data-collection="{{ page.collection }}" data-view="writeup">
 
   <div class="progress" aria-hidden="true"></div>
 
-  <div class="wrap stagger">
+  <header class="doc-head" data-orb>
+    <div class="wrap">
 
-    <header class="doc-head">
-      <a class="back-link" href="{{ section.url | relative_url }}">{% include icon.html name="arrow-left" %}{{ index_label }}</a>
+      <a class="back-link enter" href="{{ section.url | relative_url }}">{% include icon.html name="arrow-left" %}{{ index_label }}</a>
 
-      <p class="eyebrow">
-        {%- if page.date %}{{ page.date | date: "%d %b %Y" }}{% endif -%}
+      <p class="kicker doc-kicker enter" style="--i: 1">
+        {{- kind -}}
+        {%- if page.date %}<span class="dot" aria-hidden="true">·</span><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%d %b %Y" }}</time>{% endif -%}
       </p>
 
-      <h1 class="doc-title">{{ page.title }}</h1>
+      <h1 class="invert doc-title enter" style="--i: 2">{{ page.title }}</h1>
 
       {%- if page.summary %}
-      <p class="doc-lede">{{ page.summary }}</p>
+      <p class="lede doc-lede enter" style="--i: 3">{{ page.summary }}</p>
       {%- endif %}
 
       {% include meta-{{ page.collection }}.html %}
-    </header>
 
-    <div class="article-grid">
+    </div>
+  </header>
+
+  <div class="doc-body" data-orb>
+    <div class="wrap article-grid">
 
       <aside class="rail">
         <div class="rail-inner">
-          <span class="eyebrow">Contents</span>
+          <span class="kicker">Contents</span>
           <nav class="toc" aria-label="Contents"></nav>
         </div>
       </aside>
@@ -77,19 +86,20 @@ scripts: [article]
       </div>
 
     </div>
+  </div>
 
-    <nav class="pager" aria-label="More {{ section.name | downcase }}" data-reveal>
-      <a class="pager-link" href="{{ prev.url | default: section.url | relative_url }}" data-spotlight>
-        <span class="eyebrow">{% include icon.html name="arrow-left" %}{% if prev %}Previous{% else %}Index{% endif %}</span>
+  <nav class="pager-wrap" data-orb aria-label="More {{ section.name | downcase }}">
+    <div class="wrap pager">
+      <a class="glass pager-link" href="{{ prev.url | default: section.url | relative_url }}" data-reveal>
+        <span class="kicker">{% include icon.html name="arrow-left" %}{% if prev %}Previous{% else %}Index{% endif %}</span>
         <span class="pager-title">{{ prev.title | default: index_label }}</span>
       </a>
-      <a class="pager-link pager-next" href="{{ next.url | default: section.url | relative_url }}" data-spotlight>
-        <span class="eyebrow">{% if next %}Next{% else %}Index{% endif %}{% include icon.html name="arrow-right" %}</span>
+      <a class="glass pager-link pager-next" href="{{ next.url | default: section.url | relative_url }}" data-reveal>
+        <span class="kicker">{% if next %}Next{% else %}Index{% endif %}{% include icon.html name="arrow-right" %}</span>
         <span class="pager-title">{{ next.title | default: index_label }}</span>
       </a>
-    </nav>
-
-  </div>
+    </div>
+  </nav>
 
   <template id="codeCopy">
     <button type="button" class="copy-btn code-copy" aria-label="Copy code">

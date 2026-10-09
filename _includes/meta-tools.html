@@ -1,11 +1,16 @@
-<dl class="matrix">
-  {%- if page.language %}
-  <div class="matrix-cell"><dt>Language</dt><dd>{{ page.language }}</dd></div>
-  {%- endif %}
-  {%- if page.category %}
-  <div class="matrix-cell"><dt>Category</dt><dd>{{ page.category }}</dd></div>
-  {%- endif %}
-  {%- if page.install %}
-  <div class="matrix-cell matrix-wide"><dt>Install</dt><dd>{% include install.html cmd=page.install %}</dd></div>
-  {%- endif %}
-</dl>
+<div class="glass doc-meta enter" style="--i: 4">
+  <dl class="vitals">
+    {%- if page.language %}
+    <div><dt>Language</dt><dd>{{ page.language }}</dd></div>
+    {%- endif %}
+    {%- if page.category %}
+    <div><dt>Category</dt><dd>{{ page.category }}</dd></div>
+    {%- endif %}
+    {%- if page.repo %}
+    <div><dt>Source</dt><dd><a class="vital-link" href="{{ page.repo }}" target="_blank" rel="noopener noreferrer">Repository {% include icon.html name="arrow-up-right" %}</a></dd></div>
+    {%- endif %}
+    {%- if page.install %}
+    <div class="vital-wide vital-install"><dt>Install</dt><dd>{% include install.html cmd=page.install %}</dd></div>
+    {%- endif %}
+  </dl>
+</div>

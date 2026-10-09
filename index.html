@@ -5,48 +5,68 @@ styles: [home]
 headline: "The quieter you become, the more you can hear"
 ---
 
-{%- assign latest = site.writeups | sort: "date" | reverse -%}
 {%- assign words = page.headline | split: " " -%}
+{%- assign latest = site.writeups | concat: site.tools | concat: site.research | sort: "date" | reverse -%}
+{%- assign hubs = "writeups,tooling,research" | split: "," -%}
 
-<section class="hero" data-spotlight>
-  <div class="hero-field" aria-hidden="true"></div>
-
+<section class="hero" data-orb>
   <div class="wrap">
 
-    <h1 class="display hero-title">
-      {%- for word in words %}<span class="word">{{ word }}</span> {% endfor -%}
+    <p class="kicker hero-kicker">{{ site.tagline }}</p>
+
+    <h1 class="invert hero-title">
+      {%- for word in words %}<span class="word" style="--i: {{ forloop.index }}">{{ word }}</span> {% endfor -%}
     </h1>
 
-    <div class="hero-body">
-      <p class="lede">
-        I'm a Computer Science and Engineering student working my way into offensive
-        security. Here I publish my machine writeups, the tooling I build and the
-        vulnerability research I do on my own.
-      </p>
-      <p class="lede">Everything here was done against machines I was authorised to test.</p>
+    <p class="lede hero-lede">
+      I'm a Computer Science and Engineering student working my way into offensive
+      security. Here I publish my machine writeups, the tooling I build and the
+      vulnerability research I do on my own.
+    </p>
 
-      <div class="hero-cta">
-        <a class="btn btn-primary" href="{{ '/writeups.html' | relative_url }}">Read the writeups {% include icon.html name="arrow-right" %}</a>
-        <a class="btn" href="{{ '/about.html' | relative_url }}">About me</a>
-      </div>
+    <div class="hero-cta">
+      <a class="pill pill-solid" href="{{ '/writeups.html' | relative_url }}">Read the writeups {% include icon.html name="arrow-right" %}</a>
+      <a class="pill" href="{{ '/about.html' | relative_url }}">About me</a>
     </div>
 
   </div>
 </section>
 
 {%- if latest.size > 0 %}
-<section class="section" data-reveal>
+<section class="latest" data-orb aria-labelledby="latestTitle">
   <div class="wrap">
-    <div class="section-head">
-      <h2>Latest writeups</h2>
-      <a class="section-link" href="{{ '/writeups.html' | relative_url }}">All writeups {% include icon.html name="arrow-right" %}</a>
-    </div>
 
-    <div class="entry-list">
+    <h2 class="invert section-title" id="latestTitle" data-reveal>Latest</h2>
+
+    <div class="glass entry-list" data-reveal>
       {%- for doc in latest limit: 4 %}
-      {% include entry.html doc=doc %}
+      {% include entry.html doc=doc mixed=true %}
       {%- endfor %}
     </div>
+
   </div>
 </section>
 {%- endif %}
+
+<section class="index" data-orb aria-label="Sections">
+  <div class="wrap">
+    <ul class="index-list">
+      {%- for key in hubs %}
+      {%- assign hub = site.pages | where: "nav", key | first %}
+      {%- assign count = site[hub.items] | size %}
+      <li>
+        <a class="index-row" href="{{ hub.url | relative_url }}">
+          <span class="invert index-word" data-reveal>{{ hub.title }}</span>
+          <span class="index-text" data-reveal>
+            <span class="index-desc">{{ hub.lede }}</span>
+            {%- if count > 0 %}
+            <span class="index-count">{{ count }} {% if count == 1 %}{{ hub.noun }}{% else %}{{ hub.nouns }}{% endif %}</span>
+            {%- endif %}
+          </span>
+          <span class="index-go" aria-hidden="true">{% include icon.html name="arrow-right" %}</span>
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>

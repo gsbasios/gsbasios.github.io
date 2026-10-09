@@ -14,8 +14,8 @@
 <meta name="robots" content="noindex">
 {%- endif %}
 
-<meta name="theme-color" content="#0b0c0e" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#050506" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#e9e9e9" media="(prefers-color-scheme: light)">
 
 <meta property="og:type" content="{% if page.collection %}article{% else %}website{% endif %}">
 <meta property="og:title" content="{{ doc_title }}">
@@ -31,17 +31,18 @@
 
 <script>
   (function () {
+    var root = document.documentElement;
     var theme;
     try { theme = localStorage.getItem('gsb-theme'); } catch (e) {}
     if (theme !== 'light' && theme !== 'dark') {
       theme = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     }
-    document.documentElement.dataset.theme = theme;
+    root.dataset.theme = theme;
+    root.classList.add('js');
   })();
 </script>
 
-<link rel="preload" href="{{ '/assets/fonts/ibm-plex-sans-latin.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="{{ '/assets/fonts/ibm-plex-mono-400-latin.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ '/assets/fonts/mona-sans-latin-wdth-normal.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{ '/assets/css/fonts.css' | relative_url }}">
 
 <link rel="stylesheet" href="{{ '/assets/css/core.css' | relative_url }}">

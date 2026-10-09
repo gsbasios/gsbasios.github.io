@@ -1,10 +1,10 @@
-<div class="wrap">
-  <div class="stub stagger">
-    <span class="eyebrow">{{ include.eyebrow }}</span>
-    <h1 class="display">{{ include.title }}</h1>
-    <p class="lede">{{ include.lede }}</p>
-    <div class="stub-cta">
-      <a class="btn btn-primary" href="{{ '/index.html' | relative_url }}">Back to home</a>
+<section class="stub" data-orb>
+  <div class="wrap">
+    <span class="kicker enter">{{ include.eyebrow }}</span>
+    <h1 class="invert stub-title enter" style="--i: 1">{{ include.title }}</h1>
+    <p class="lede enter" style="--i: 2">{{ include.lede }}</p>
+    <div class="stub-cta enter" style="--i: 3">
+      <a class="pill pill-solid" href="{{ '/index.html' | relative_url }}">Back to home {% include icon.html name="arrow-right" %}</a>
     </div>
   </div>
-</div>
+</section>

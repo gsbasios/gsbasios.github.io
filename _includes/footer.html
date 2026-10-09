@@ -1,40 +1,29 @@
-<footer class="site-foot">
+<footer class="foot" data-orb>
   <div class="wrap">
+    <div class="glass foot-slab" data-reveal>
 
-    <div class="foot-grid">
-
-      <div class="foot-intro" data-reveal>
-        <p class="foot-name">{{ site.author }}</p>
-        <p class="foot-note">Researching how systems fail, building the tools to prove it, and writing it all down.</p>
+      <div class="foot-intro">
+        <a class="brand" href="{{ '/index.html' | relative_url }}">{{ site.author }}</a>
+        <p>Researching how systems fail, building the tools to prove it, and writing it all down.</p>
+        <p>Everything here was done against machines I was authorised to test.</p>
       </div>
 
-      <nav class="foot-col" aria-labelledby="footSections" data-reveal>
-        <h2 class="foot-title" id="footSections">Sections</h2>
-        <ul class="foot-list">
-          {%- for item in site.nav %}
-          {%- unless item.key == "home" %}
-          <li><a href="{{ item.url | relative_url }}">{{ item.name }}</a></li>
-          {%- endunless %}
-          {%- endfor %}
-        </ul>
+      <nav class="foot-col" aria-label="Sections">
+        {%- for item in site.nav %}
+        {%- unless item.key == "home" %}
+        <a href="{{ item.url | relative_url }}">{{ item.name }}</a>
+        {%- endunless %}
+        {%- endfor %}
       </nav>
 
-      <div class="foot-col" data-reveal>
-        <h2 class="foot-title">Let's connect</h2>
-        <ul class="foot-list">
-          <li><a href="https://github.com/{{ site.social.github }}" target="_blank" rel="noopener noreferrer">GitHub {% include icon.html name="arrow-up-right" %}</a></li>
-          <li><a href="https://www.linkedin.com/in/{{ site.social.linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn {% include icon.html name="arrow-up-right" %}</a></li>
-        </ul>
-
-        <h2 class="foot-title">Contact</h2>
-        <ul class="foot-list">
-          <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-        </ul>
+      <div class="foot-col">
+        <a href="https://github.com/{{ site.social.github }}" target="_blank" rel="noopener noreferrer">GitHub {% include icon.html name="arrow-up-right" %}</a>
+        <a href="https://www.linkedin.com/in/{{ site.social.linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn {% include icon.html name="arrow-up-right" %}</a>
+        <a href="mailto:{{ site.email }}">{{ site.email }}</a>
       </div>
 
+      <p class="foot-base">© {{ site.time | date: "%Y" }} {{ site.author }}</p>
+
     </div>
-
-    <p class="foot-base">© {{ site.time | date: "%Y" }} {{ site.author }}</p>
-
   </div>
 </footer>

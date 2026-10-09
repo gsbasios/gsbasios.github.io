@@ -110,6 +110,9 @@
   if (location.hash === '#code') setView('code');
 
   body.querySelectorAll('table').forEach((table) => {
+    const head = table.tHead;
+    if (head && ![...head.querySelectorAll('th')].some((cell) => cell.textContent.trim())) head.hidden = true;
+
     const scroller = document.createElement('div');
     scroller.className = 'table-scroll';
     table.before(scroller);
