@@ -6,6 +6,7 @@ difficulty: Medium
 platform: Hack The Box
 date: 2026-10-10
 filename: devhub.md
+image: /assets/og/devhub.png
 summary: >-
   RCE against a vulnerable MCP Inspector (CVE-2026-23744), lateral movement via
   a leaked token recovered from process arguments, and root through an
